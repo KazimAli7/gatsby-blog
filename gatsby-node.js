@@ -1,5 +1,6 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const { paginate } = require('gatsby-awesome-pagination');
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
@@ -37,6 +38,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
   // `context` is available in the template as a prop and as a variable in GraphQL
 
+  paginate({
+    createPage,
+    items: result.data.swapi.getAllPost.result,
+    itemsPerPage: 20,
+    pathPrefix: '/posts',
+    component: path.resolve('src/templates/index.js')
+  });
+
   if (posts.length > 0) {
     posts.forEach((post, index) => {
       console.log("checking posts", posts, post)
@@ -44,7 +53,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       const nextPostId = index === posts.length - 1 ? null : posts[index + 1]._id
 
       createPage({
-        path: post.slug,
+        path: `/posts/${post.slug}`,
         component: blogPost,
         context: {
           id: post._id,

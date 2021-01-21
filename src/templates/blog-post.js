@@ -4,30 +4,29 @@ import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-const BlogPostTemplate = ({ data, location }) => {
+const BlogPostTemplate = ({ data, location, pathContext }) => {
   const post = data.swapi.getPostById
-  const siteTitle = `Title`
+  const siteTitle = `← Back`
   const { previous, next } = post
-  console.log("Dsadsadasdasd", data, location)
 
   const displayContent = (value) => {
     const jsonValue = JSON.parse(value)
-    const result = jsonValue.filter((item, index) =>{
+    const result = jsonValue.filter((item) =>{
         if(item.content){
             return item
         }
+        return null
     })
-    console.log('dasdasd', result)
     return(
         <div>
             {
                 result.map((item, index) =>(
-                    <ul>
+                    <ul key={index}>
                     {
                         item.content
                         ? 
                         item.content.map((i, ind) =>(
-                            <li className="descriptionView">
+                            <li key={ind} className="descriptionView">
                                 {i.text ? i.text : null}
                             </li>
                         ))
@@ -53,7 +52,7 @@ const BlogPostTemplate = ({ data, location }) => {
         itemType="http://schema.org/Article"
       >
         <header>
-          <h1 itemProp="headline">{post.title}</h1>
+          <h1 className="text-3xl font-bold" itemProp="headline">{post.title}</h1>
           <p>{post.subtitle}</p>
         </header>
         <section>
@@ -81,7 +80,7 @@ const BlogPostTemplate = ({ data, location }) => {
           <li>
             {previous && (
               <Link to={previous.slug} rel="prev">
-                ← {post.title}
+                ← Back
               </Link>
             )}
           </li>

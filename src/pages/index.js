@@ -1,89 +1,19 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
+import React from "react";
+import { Link, graphql } from "gatsby";
+import Bio from "../components/bio";
+import Layout from "../components/layout";
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+class BlogIndex extends React.Component {
+  render() {
+    const { data } = this.props;
 
-const BlogIndex = ({ data, location }) => {
-  const siteTitle = `All Post`
-  const posts = data.swapi.getAllPost
- const JsonView = value => {
-  const jsonValue = JSON.parse(value)
-  if(jsonValue){
-      return(
-          <p className="description">
-              {
-                  jsonValue[0].content ?
-                  jsonValue[0].content.map((item, index) => (
-                      <>
-                          {item.text}
-                      </>
-                  ))
-                  :
-                  null
-              }
-          </p>
-      )
-  } else {
-      return <div>
-          Nothing found
-      </div>
+    return (
+      <Layout location={this.props.location}>
+        <Bio />
+        <Link to='/posts'><button>See All Posts</button></Link>
+      </Layout>
+    )
   }
-}
+};
 
-  return (
-    <Layout location={location} title={siteTitle}>
-      <SEO title="All posts" />
-      <ol style={{ listStyle: `none` }}>
-        {posts.result.map(post => {
-          const title = post.title || post.slug
-
-          return (
-            <li key={post.slug}>
-              <article
-                className="post-list-item"
-                itemScope
-                itemType="http://schema.org/Article"
-              >
-                <header>
-                  <h2>
-                    <Link to={post.slug} itemProp="url">
-                      <span itemProp="headline">{title}</span>
-                    </Link>
-                  </h2>
-                  <small>{post.subtitle ? post.subtitle : ''}</small>
-                </header>
-                <section>
-                  {
-                    post.content ?
-                    JsonView(post.content)
-                    :
-                    null
-                  }
-                </section>
-              </article>
-            </li>
-          )
-        })}
-      </ol>
-    </Layout>
-  )
-}
-
-export default BlogIndex
-
-export const pageQuery = graphql`
-  query {
-    swapi {
-      getAllPost(page: 1 limit:10) {
-        result{
-          _id
-          slug
-          title
-          subtitle
-          content
-        }
-      }
-    }
-  }
-`
+export default BlogIndex;
