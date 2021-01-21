@@ -32,7 +32,6 @@ const BlogArchive = ({ data, pageContext, location }) => {
       </div>
   }
 }
-  console.log("dasdsads", data, pageContext)
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
