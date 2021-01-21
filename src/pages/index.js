@@ -1,16 +1,18 @@
 import React from "react";
-import { Link, graphql } from "gatsby";
-import Bio from "../components/bio";
+import { Router } from '@reach/router'
 import Layout from "../components/layout";
+import Posts from '../templates/index'
+import App from "./App";
 
 class BlogIndex extends React.Component {
   render() {
-    const { data } = this.props;
 
     return (
       <Layout location={this.props.location}>
-        <Bio />
-        <Link to='/posts'><button>See All Posts</button></Link>
+        <Router>
+          <Posts path="/posts" />
+          <App path="/"/>
+        </Router>
       </Layout>
     )
   }

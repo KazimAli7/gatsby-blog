@@ -4,7 +4,7 @@ import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-const BlogPostTemplate = ({ data, location, pathContext }) => {
+const BlogPostTemplate = ({ data, location }) => {
   const post = data.swapi.getPostById
   const siteTitle = `← Back`
   const { previous, next } = post
