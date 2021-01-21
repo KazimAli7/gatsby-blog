@@ -13,7 +13,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     `
     query {
        swapi {
-        getAllPost(page: 1) {
+        getAllPost(page: 1, limit: 20) {
           result{
             _id
             slug
